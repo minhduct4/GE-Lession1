@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject roadPrefab; // Prefab của đoạn đường
-    public GameObject obstaclePrefab; // Prefab của chướng ngại vật
+    public List<GameObject> obstaclePrefab; // Prefab của chướng ngại vật
     public int numOfRoads = 10; // Số đoạn đường ban đầu
     Vector3 firstPosition = new Vector3(0, 0, 0); // Vị trí bắt đầu tạo đường
     Vector3 nextPosition; // Vị trí tiếp theo để tạo đoạn đường
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
         Vector3 obstaclePosition = basicRoad.transform.Find(randomPos == 0 ? "Left" : randomPos == 1 ? "Right" : "Center").transform.position;
         if (obstaclePrefab != null)
         {
-            GameObject obstacle = Instantiate(obstaclePrefab, obstaclePosition, Quaternion.identity);
+            GameObject obstacle = Instantiate(obstaclePrefab[Random.Range(0, obstaclePrefab.Count)], obstaclePosition, Quaternion.identity);
             obstacle.transform.parent = basicRoad.transform; // đặt obstacle làm con của road để dễ quản lý
         } 
     }

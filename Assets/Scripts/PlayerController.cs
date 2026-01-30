@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     float turnInput = 0f;
     GameManager gameManager;
     public float forwardSpeed = 5f;
+
+    public GameObject boomEffectPrefab; // Prefab của hiệu ứng nổ
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -45,9 +47,14 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Hit an obstacle! Game Over.");
             // Thực hiện các hành động khi va chạm với chướng ngại vật ở đây
-            // Ví dụ: Dừng trò chơi, hiển
+            // Ví dụ: Dừng trò chơi, hiển thị hiệu ứng nổ
+            Instantiate(boomEffectPrefab, transform.position, Quaternion.identity);
             //Time.timeScale = 0f; // Dừng trò chơi
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Tải lại cảnh hiện tại để bắt đầu lại trò chơi
+            Invoke(nameof(LoadSceneToPlay), 1.5f); // Gọi hàm LoadSceneToPlay sau 1 giây 
         }
+    }
+    private void LoadSceneToPlay()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
